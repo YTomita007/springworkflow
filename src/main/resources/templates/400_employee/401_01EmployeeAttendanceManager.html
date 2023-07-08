@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>勤怠管理画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>勤怠管理</h2>
+	</div>
+	<form th:action="@{/employee/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<div class="notify-message-area">
+		<h3 th:text="${message}"></h3>
+	</div>
+	<form th:object="${AttendanceForm}" th:action="@{/employee/attendance}" method="POST">
+		<table style="margin: 0 auto">
+			<tr>
+				<td nowrap align="left">勤務状況</td>
+				<td nowrap align="left"><input type="hidden" th:value="${session.employee.employeeNo}"></td>
+				<td nowrap align="left"><input type="hidden" th:value="${session.employee.employeeName}"></td>
+				<td>
+					<div th:if="${session.attendance} == true">
+						<h2 class="on-working">勤務中</h2>
+					</div>
+					<div th:if="${session.attendance} == false">
+						<h2 class="out-of-work">退勤中</h2>
+					</div>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center">
+					<div th:if="${session.attendance} == true">
+						<button type="submit">退勤</button>
+					</div>
+					<div th:if="${session.attendance} == false">
+						<button type="submit">出勤</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>申請用カレンダー</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel='stylesheet' th:href="@{/webjars/fullcalendar/3.5.1/dist/fullcalendar.css}">
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/moment/2.19.1/min/moment.min.js}"></script>
+	<script th:src="@{/webjars/fullcalendar/3.5.1/dist/fullcalendar.js}"></script>
+	<script th:src="@{/app.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#calendar').fullCalendar({
+				events: {
+					url: '/api/application/all'
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<form th:action="@{/employee/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+
+	<div id='calendar'></div>
+</body>
+
+</html>

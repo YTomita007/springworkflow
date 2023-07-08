@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先登録画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>得意先登録</h2>
+	</div>
+	<form th:action="@{/customer/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<form th:object="${registerForm}" th:action="@{/customer/register}" method="post">
+		<table border="1" style="margin: 0 auto" class="flat-table flat-table-3">
+			<tr>
+				<td nowrap width="100">得意先名</td>
+				<td nowrap width="300"><input type="text" th:field="*{custName}" maxLength="32" size="60"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">電話番号</td>
+				<td nowrap width="300"><input type="text" th:field="*{telNo}" maxLength="13" size="16"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">郵便番号</td>
+				<td nowrap width="300"><input type="text" th:field="*{postalCode}" maxLength="8" size="10"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">住所</td>
+				<td nowrap width="300"><input type="text" th:field="*{address}" maxLength="40" size="80"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">割引率</td>
+				<td nowrap width="300"><input type="number" th:field="*{discountRate}" maxLength="2" size="5"></td>
+			</tr>
+		</table>
+		<br>
+		<div style="text-align: center">
+			<button type="submit">登 録</button>
+		</div>
+	</form>
+	<div class="error-message-area">
+		<div th:errors="${registerForm.*}">validation massage</div>
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+</body>
+
+</html>

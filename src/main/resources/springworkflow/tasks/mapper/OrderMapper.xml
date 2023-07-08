@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springworkflow.tasks.mapper.OrderMapper">
+
+  <select id="totalOfYearOrMonthByCustomer" resultType="springworkflow.tasks.entity.AggregateByCustomer">
+    select ORDERS.CUSTOMER_CODE as custCode, CUSTOMER.CUSTOMER_NAME as custName,
+    sum(ORDERS.TOTAL_PRICE) as totalPrice
+    from ORDERS, CUSTOMER
+    where ORDERS.CUSTOMER_CODE = CUSTOMER.CUSTOMER_CODE
+    and ORDERS.ORDER_DATE between #{startDate} and #{endDate}
+    group by ORDERS.CUSTOMER_CODE, CUSTOMER.CUSTOMER_NAME
+    order by ORDERS.CUSTOMER_CODE
+  </select>
+
+  <select id="createOrderTotalListByItem" resultType="springworkflow.tasks.entity.AggregateByItem">
+    select ORDER_DETAILS.ITEM_CODE as itemCode, ITEM.ITEM_NAME as itemName,
+    sum(ORDER_DETAILS.ORDER_NUM) as totalAmount, ITEM.PRICE,
+    sum(ORDER_DETAILS.ORDER_PRICE) as totalPrice
+    from ORDERS,ORDER_DETAILS,ITEM
+    where ORDERS.ORDER_NO = ORDER_DETAILS.ORDER_NO and ORDER_DETAILS.ITEM_CODE = ITEM.ITEM_CODE
+    group by ORDERS.CUSTOMER_CODE, ORDER_DETAILS.ITEM_CODE, ITEM.ITEM_NAME, ITEM.PRICE
+    having ORDERS.CUSTOMER_CODE= #{custCode}
+    order by ORDER_DETAILS.ITEM_CODE
+  </select>
+
+	<select id="totalOfMonthByCustomer" resultType="springworkflow.tasks.entity.AggregateByItem">
+	select CUSTOMER_CODE as CUST_CODE, 
+	count(TOTAL_PRICE), 
+	date_format(DELIVER_DATE, '%Y%M') 
+	from ORDERS 
+	group by date_format(DELIVER_DATE, '%Y%M'), CUST_CODE
+	</select>
+	
+	<select id="maxOrderNo" resultType="String">
+	select max(ORDER_NO) from ORDERS
+	</select>
+	
+	<insert id="createOrder">
+	insert into ORDERS 
+    (ORDER_NO,CUSTOMER_CODE,EMPLOYEE_NO,
+    TOTAL_PRICE,DETAIL_NUM,DELIVER_DATE,ORDER_DATE)
+    values
+    (#{orderNo},#{custCode},
+    #{employeeNo},#{totalPrice},
+    #{detailNum},#{deliverDate},#{orderDate})
+	</insert>
+
+	<insert id="createOrderDetail">
+	insert into ORDER_DETAILS 
+    (ORDER_NO,ITEM_CODE,ORDER_NUM,ORDER_PRICE)
+    values
+    (#{orderPurchaseForm.orderNo},#{itemWithAmpAmount.itemCode},#{itemWithAmpAmount.amount},#{itemWithAmpAmount.price})
+	</insert>
+</mapper>

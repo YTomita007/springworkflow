@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>メインメニュー画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>メインメニュー</h2>
+	</div>
+
+	<table style="margin: 0 auto">
+		<tr>
+			<td>
+				<form th:action="@{/customer/menu}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 管 理</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/aggregate/menu}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 別 集 計</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/employee/menu}" method="get">
+					<button type="submit" style="width: 200px">従 業 員 管 理</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/order}" method="get">
+					<button type="submit" style="width: 200px">商 品 購 入 処 理</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<div style="text-align: center">
+		<form th:action="@{/logout}" method="get">
+			<button type="submit">ログアウト</button>
+		</form>
+	</div>
+</body>
+
+</html>

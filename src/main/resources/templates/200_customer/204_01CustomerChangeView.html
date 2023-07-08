@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先変更画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>得意先変更</h2>
+	</div>
+	<form th:action="@{/customer/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<th:block th:if="${changeTargetForm}">
+		<form th:object="${changeTargetForm}" th:action="@{/customer/change/find}" method="post">
+			<table border="1" style="margin: 0 auto">
+				<tr>
+					<td nowrap>得意先コード</td>
+					<td nowrap><input type="text" th:field="*{custCode}" maxLength="6" size="10"></td>
+					<td nowrap>
+						<button type="submit" name="buttonId" value="V204_01_01" style="width: 100px">検索</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</th:block>
+	<th:block th:if="${changeForm}">
+		<div style="text-align: center">
+			<form th:object="${changeForm}" th:action="@{/customer/change/update}" method="post"
+				style="display: inline">
+				<br>
+				<table border="1" style="margin: 0 auto; text-align: left">
+					<tr>
+						<td nowrap width="100">得意先コード</td>
+						<td nowrap width="300" th:text="${custCode}"></td>
+					</tr>
+					<tr>
+						<td nowrap width="100">得意先名</td>
+						<td nowrap width="300"><input type="text" th:field="*{custName}" maxLength="32" size="60"></td>
+					</tr>
+					<tr>
+						<td nowrap width="100">電話番号</td>
+						<td nowrap width="300"><input type="text" th:field="*{telNo}" maxLength="13" size="16"></td>
+					</tr>
+					<tr>
+						<td nowrap width="100">郵便番号</td>
+						<td nowrap width="300"><input type="text" th:field="*{postalCode}" maxLength="8" size="10"></td>
+					</tr>
+					<tr>
+						<td nowrap width="100">住所</td>
+						<td nowrap width="300"><input type="text" th:field="*{address}" maxLength="40" size="80"></td>
+					</tr>
+					<tr>
+						<td nowrap width="100">割引率</td>
+						<td nowrap width="300"><input type="text" th:field="*{discountRate}" maxLength="2" size="10"> %
+						</td>
+					</tr>
+				</table>
+				<br>
+				<button type="submit" style="width: 100px">変 更</button>
+			</form>
+			<form th:object="${changeForm}" th:action="@{/customer/change}" method="get" style="display: inline">
+				<button type="submit" style="width: 100px">ク リ ア</button>
+			</form>
+		</div>
+	</th:block>
+	<div class="error-message-area">
+		<th:block th:if="${changeTargetForm}">
+			<div th:errors="${changeTargetForm.*}">validation massage</div>
+		</th:block>
+		<th:block th:if="${changeForm}">
+			<div th:errors="${changeForm.*}">validation massage</div>
+		</th:block>
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+</body>
+
+</html>

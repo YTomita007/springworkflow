@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先検索結果画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>得意先検索結果</h2>
+	</div>
+	<form th:action="@{/customer/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<table border="1" style="margin: 0 auto">
+		<tr>
+			<th width="100">得意先コード</th>
+			<th width="200">得意先名</th>
+			<th width="100">電話番号</th>
+			<th width="100">郵便番号</th>
+			<th width="300">住所</th>
+			<th width="80">割引率</th>
+		</tr>
+		<tr th:object="${customer}" th:each="customer : ${customers}">
+			<td th:text="*{custCode}">itemCode</td>
+			<td th:text="*{custName}">itemName</td>
+			<td th:text="*{telNo}">date</td>
+			<td th:text="*{postalCode}">price</td>
+			<td th:text="*{address}">price</td>
+			<td th:text="*{discountRate} + '%'">price</td>
+		</tr>
+	</table>
+	<form th:action="@{/customer/find}" method="get">
+		<div style="text-align: center">
+			<button type="submit">前画面へ戻る</button>
+		</div>
+	</form>
+	<div class="error-message-area">
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="/app.js"></script>
+</body>
+
+</html>

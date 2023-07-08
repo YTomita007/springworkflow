@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>注文確定画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>注文確定</h2>
+	</div>
+	<form th:action="@{/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メインメニューへ戻る</button>
+		</div>
+	</form>
+	<div class="notify-message-area">
+		<h3 th:text="${notifyMessage}"></h3>
+	</div>
+	<table border="1" style="margin: 0 auto">
+		<tr>
+			<th width="100">注文番号</th>
+			<th width="100">得意先名</th>
+			<th width="100">従業員名</th>
+			<th width="100">合計金額</th>
+			<th width="80">注文明細数</th>
+			<th width="100">配送日</th>
+			<th width="100">注文日</th>
+		</tr>
+		<tr th:object="${orderPurchaseForm}">
+			<td th:text="*{orderNo}">orderNo</td>
+			<td th:text="${employee.employeeName}">employeeName</td>
+			<td th:text="${customer.custName}">custName</td>
+			<td th:text="*{totalPrice}">totalPrice</td>
+			<td th:text="*{detailNum}">detailNum</td>
+			<td th:text="*{deliverDate}">deliverDate</td>
+			<td th:text="*{orderDate}">orderDate</td>
+		</tr>
+	</table>
+	<div class="error-message-area">
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="/app.js"></script>
+</body>
+
+</html>

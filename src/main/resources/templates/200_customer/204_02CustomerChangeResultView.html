@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先変更結果画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<!-- 見出し -->
+	<div style="text-align: center">
+		<h2>得意先変更結果</h2>
+		<div class="notify-message-area">
+			<h3>得意先を変更しました。</h3>
+		</div>
+	</div>
+	<table th:object="${customer}" border="1" style="margin: 0 auto">
+		<tr>
+			<td nowrap width="100">得意先コード</td>
+			<td nowrap width="300" th:text="*{custCode}"></td>
+		</tr>
+		<tr>
+			<td nowrap width="100">得意先名</td>
+			<td nowrap width="300" th:text="*{custName}"></td>
+		</tr>
+		<tr>
+			<td nowrap width="100">電話番号</td>
+			<td nowrap width="300" th:text="*{telNo}"></td>
+		</tr>
+		<tr>
+			<td nowrap width="100">郵便番号</td>
+			<td nowrap width="300" th:text="*{postalCode}"></td>
+		</tr>
+		<tr>
+			<td nowrap width="100">住所</td>
+			<td nowrap width="300" th:text="*{address}"></td>
+		</tr>
+		<tr>
+			<td nowrap width="100">割引率</td>
+			<td nowrap width="300" th:text="*{discountRate}"></td>
+		</tr>
+	</table>
+	<br>
+	<form th:action="@{/customer/change}" method="get">
+		<div style="text-align: center">
+			<button type="submit" style="width: 200px">前画面へ戻る</button>
+		</div>
+	</form>
+</body>
+
+</html>

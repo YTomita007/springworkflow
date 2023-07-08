@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<title>注文合計画面</title>
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+  <div style="text-align: center">
+    <h2>注文合計</h2>
+  </div>
+  <form th:action="@{/menu}" method="get">
+    <div align="right">
+      <button type="submit" style="width: 200px">メインメニューへ戻る</button>
+    </div>
+  </form>
+    <div class="notify-message-area">
+	    <h3 th:text="${notifyMessage}"></h3>
+	</div>
+  <form th:object="${orderPurchaseForm}" th:action="@{/order/confirm}" method="post">
+	  <input type="hidden" th:value="*{shoppingCart}">
+	  <input type="hidden" th:field="*{orderNo}" id="orderNo">
+	  <input type="hidden" th:field="*{totalPrice}" id="totalPrice">
+	  <input type="hidden" th:field="*{detailNum}" id="detailNum">
+    <table border="1" style="margin: 0 auto">
+      <tr>
+          <th nowrap width="350">商品名</th>
+          <th nowrap width="350">注文数</th>
+      </tr>
+      <tr th:object="${itemWithAmount}" th:each="itemWithAmount : ${shoppingCart}">
+        <td th:text="*{itemName}">itemName</td>
+        <td th:text="*{amount}">amount</td>
+      </tr>
+    </table>
+    <table border="1" style="margin: 0 auto">
+      <tr>
+        <td nowrap width="300">合計金額</td>
+        <td nowrap width="300" th:text="*{totalPrice}"></td>
+      </tr>
+      <tr>
+        <td nowrap width="300">注文明細数</td>
+        <td nowrap width="300" th:text="*{detailNum}"></td>
+      </tr>
+      <tr>
+        <td nowrap width="100">担当従業員</td>
+        <td nowrap width="400">
+		    <select id="employeeNo" name="employeeNo">
+		        <option th:each="employee : ${empList}" th:value="${employee.employeeNo}" 
+		        th:selected="${employee.employeeNo == employeeNo}" 
+		        th:inline="text">[[${employee.employeeName}]]
+		        </option>
+		    </select>
+		</td>
+      </tr>
+      <tr>
+        <td nowrap width="100">注文得意先</td>
+        <td nowrap width="400">
+		    <select id="custCode" name="custCode">
+		        <option th:each="customer : ${custList}" th:value="${customer.custCode}" 
+		        th:selected="${customer.custCode == custCode}" 
+		        th:inline="text">[[${customer.custName}]]
+		        </option>
+		    </select>
+		</td>
+      </tr>
+      <tr>
+        <td nowrap width="100">配達日</td>
+        <td nowrap width="400">
+			<input th:type="date" size="5" th:field="*{deliverDate}">
+		</td>
+      </tr>
+      <tr>
+        <td nowrap width="100">注文日</td>
+        <td nowrap width="400">
+			<input th:type="date" size="5" th:field="*{orderDate}">
+		</td>
+      </tr>
+    </table>
+    <br>
+    <div style="text-align: center">
+      <button type="submit" style="width: 100px">注 文 確 定</button>
+    </div>
+  </form>
+  <div class="error-message-area">
+    <div th:errors="${orderPurchaseForm.*}">validation massage</div>
+    <p th:text="${message}" class="error">error message</p>
+    <div th:object="${message}" th:each="message : ${errorMessageList}">
+      <div th:text="*{message}">message</div>
+    </div>
+  </div>
+</body>
+
+</html>

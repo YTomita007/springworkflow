@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先別集計メニュー画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+
+	<div style="text-align: center">
+		<h2>得意先別集計メニュー</h2>
+	</div>
+
+	<form th:action="@{/menu}" method="get">
+		<div align="right">
+			<button type="submit" style="width: 200px">メインメニューへ戻る</button>
+		</div>
+	</form>
+
+	<table style="margin: 0 auto">
+		<tr>
+			<td>
+				<form th:action="@{/aggregate/year}" method="get">
+					<button type="submit" style="width: 200px">年 次 受 注 集 計</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/aggregate/month}" method="get">
+					<button type="submit" style="width: 200px">月 別 受 注 集 計</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/aggregate/item}" method="get">
+					<button type="submit" style="width: 200px">商 品 別 受 注 集 計</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

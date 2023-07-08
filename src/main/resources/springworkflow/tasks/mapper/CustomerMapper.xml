@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springworkflow.tasks.mapper.CustomerMapper">
+
+  <select id="find" resultType="springworkflow.tasks.entity.Customer">
+    select CUSTOMER_CODE as custCode, CUSTOMER_NAME as custName,
+    CUSTOMER_TELNO as telNo, CUSTOMER_POSTALCODE as
+    postalCode,
+    CUSTOMER_ADDRESS as address, DISCOUNT_RATE AS discountRate
+    from
+    CUSTOMER where CUSTOMER_CODE = #{custCode}
+    and DELETE_FLAG = false
+  </select>
+
+  <select id="findByTelNo" resultType="springworkflow.tasks.entity.Customer">
+    select CUSTOMER_CODE as custCode, CUSTOMER_NAME as custName,
+    CUSTOMER_TELNO as telNo, CUSTOMER_POSTALCODE as
+    postalCode,
+    CUSTOMER_ADDRESS as address, DISCOUNT_RATE AS discountRate
+    from
+    CUSTOMER where CUSTOMER_TELNO like '%${telNo}%'
+    and DELETE_FLAG = false
+  </select>
+
+  <select id="findIgnoreDeleteFlag" resultType="springworkflow.tasks.entity.Customer">
+    select CUSTOMER_CODE as custCode, CUSTOMER_NAME as custName, CUSTOMER_TELNO as telNo,
+    CUSTOMER_POSTALCODE as postalCode, CUSTOMER_ADDRESS as address, DISCOUNT_RATE as discountRate
+    from
+    CUSTOMER where CUSTOMER_CODE = #{custCode}
+  </select>
+  
+  <insert id="insert">
+    insert into CUSTOMER
+    (CUSTOMER_CODE,CUSTOMER_NAME,CUSTOMER_TELNO,CUSTOMER_POSTALCODE,CUSTOMER_ADDRESS,DISCOUNT_RATE,DELETE_FLAG)
+    values
+    (#{custCode},#{custName},#{telNo},#{postalCode},#{address},#{discountRate},false)
+  </insert>
+  
+  <update id="delete">
+    update CUSTOMER set DELETE_FLAG=true where
+    CUSTOMER_CODE = #{custCode}
+  </update>
+  
+  <update id="update">
+    update CUSTOMER set CUSTOMER_NAME=#{custName},
+    CUSTOMER_TELNO=#{telNo},
+    CUSTOMER_POSTALCODE=#{postalCode},
+    CUSTOMER_ADDRESS=#{address},
+    DISCOUNT_RATE=#{discountRate} where
+    CUSTOMER_CODE = #{custCode} and
+    DELETE_FLAG = false
+  </update>
+  
+  <select id="findAll" resultType="springworkflow.tasks.entity.Customer">
+    select CUSTOMER_CODE as custCode,
+    CUSTOMER_NAME as custName,
+    CUSTOMER_TELNO as telNo,
+    CUSTOMER_POSTALCODE as
+    postalCode,
+    CUSTOMER_ADDRESS as address,
+    DISCOUNT_RATE as discountRate
+    from
+    CUSTOMER where DELETE_FLAG = false
+  </select>
+  
+    <select id="findAllWithSort" resultType="springworkflow.tasks.entity.Customer">
+    select CUSTOMER_CODE as custCode,
+    CUSTOMER_NAME as custName,
+    CUSTOMER_TELNO as telNo,
+    CUSTOMER_POSTALCODE as
+    postalCode,
+    CUSTOMER_ADDRESS as address,
+    DISCOUNT_RATE as discountRate
+    from
+    CUSTOMER 
+    where DELETE_FLAG = false 
+    order by ${column} ${sortType}
+  </select>
+</mapper>

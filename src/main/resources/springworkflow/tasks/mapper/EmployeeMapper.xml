@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springworkflow.tasks.mapper.EmployeeMapper">
+
+  <select id="find" resultType="springworkflow.tasks.entity.Employee">
+    select EMPLOYEE_NO as employeeNo,
+    EMPLOYEE_NAME as employeeName, PASSWORD from EMPLOYEE
+    where
+    EMPLOYEE_NO=#{employeeNo}
+  </select>
+
+  <select id="login" resultType="springworkflow.tasks.entity.Employee">
+    select EMPLOYEE_NO as employeeNo,
+    EMPLOYEE_NAME as employeeName, PASSWORD from EMPLOYEE
+    where
+    EMPLOYEE_NO=#{employeeNo} AND PASSWORD=#{password}
+  </select>
+
+  <select id="findAll" resultType="springworkflow.tasks.entity.Employee">
+    select EMPLOYEE_NO as employeeNo,
+    EMPLOYEE_NAME as employeeName, PASSWORD from EMPLOYEE
+  </select>
+</mapper>

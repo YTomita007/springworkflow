@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>エラー画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div id="contents">
+		<div id="mainArea">
+			<h1 class="error-title">システムエラー</h1>
+			<hr>
+			<p class="error" th:text="${message}">error message</p>
+			<div th:text="'timestamp: ' + ${timestamp}"></div>
+			<div th:text="'status: ' + ${status}"></div>
+			<div th:text="'error: ' + ${error}"></div>
+			<div th:text="'exception: ' + ${exception}"></div>
+			<div th:text="'message: ' + ${message}"></div>
+			<div th:text="'errors: ' + ${errors}"></div>
+			<div th:text="'trace: ' + ${trace}"></div>
+			<div th:text="'path: ' + ${path}"></div>
+		</div>
+		<div id="footerArea">
+			<a th:href="@{/}">[ログイン画面に戻る]</a>
+		</div>
+	</div>
+</body>
+
+</html>

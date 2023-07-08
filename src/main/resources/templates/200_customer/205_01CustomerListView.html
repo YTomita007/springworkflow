@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先一覧画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>得意先一覧</h2>
+	</div>
+	<form th:action="@{/customer/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<table style="margin: 0 auto" class="flat-table flat-table-1">
+		<tr>
+			<th width="30"></th>
+			<th width="100">
+				<a th:href="@{/customer/list?column=custCode&sortType=DESC}">↑</a>
+				<a th:href="@{/customer/list?column=custCode&sortType=ASC}">↓</a>
+			</th>
+			<th width="200">
+				<a th:href="@{/customer/list?column=custName&sortType=DESC}">↑</a>
+				<a th:href="@{/customer/list?column=custName&sortType=ASC}">↓</a>
+			</th>
+			<th width="100">
+				<a th:href="@{/custosmer/list?column=telNo&sortType=DESC}">↑</a>
+				<a th:href="@{/customer/list?column=telNo&sortType=ASC}">↓</a>
+			</th>
+			<th width="100">
+				<a th:href="@{/customer/list?column=postalCode&sortType=DESC}">↑</a>
+				<a th:href="@{/customer/list?column=postalCode&sortType=ASC}">↓</a>
+			</th>
+			<th width="300">
+				<a th:href="@{/customer/list?column=address&sortType=DESC}">↑</a>
+				<a th:href="@{/customer/list?column=address&sortType=ASC}">↓</a>
+			</th>
+			<th width="80">
+				<a th:href="@{/customer/list?column=discountRate&sortType=DESC}">↑</a>
+				<a th:href="@{/customer/list?column=discountRate&sortType=ASC}">↓</a>
+			</th>
+		</tr>
+	</table>
+	<form th:object="${deleteForm}" th:action="@{/customer/delete/find}" method="post">
+		<table border="1" style="margin: 0 auto" class="flat-table flat-table-1">
+			<tr>
+				<th width="30"></th>
+				<th width="100">得意先コード</th>
+				<th width="200">得意先名</th>
+				<th width="100">電話番号</th>
+				<th width="100">郵便番号</th>
+				<th width="300">住所</th>
+				<th width="80">割引率</th>
+			</tr>
+			<tr th:object="${customer}" th:each="customer : ${customerList}">
+				<td><input type="radio" class="radios" name="custCode" th:id="*{custCode}" th:value="*{custCode}" />
+				</td>
+				<td><a th:href="@{/customer/change/find(custCode=${customer.custCode})}"
+						th:text="*{custCode}">itemCode</a></td>
+				<td th:text="*{custName}">custName</td>
+				<td th:text="*{telNo}">telNo</td>
+				<td th:text="*{postalCode}">postalCode</td>
+				<td th:text="*{address}">address</td>
+				<td th:text="*{discountRate} + '%'">discountRate</td>
+			</tr>
+		</table>
+		<button type="submit" style="width: 100px">削除</button>
+	</form>
+	<div class="error-message-area">
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="/app.js"></script>
+</body>
+
+</html>
