@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>月別受注集計画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>月別受注集計</h2>
+	</div>
+	<form th:action="@{/aggregate/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<div style="display: flex">
+		<div style="margin: 0 auto">
+			<form th:object="${aggregateByCustomerForm}" th:action="@{/aggregate/month}" method="post"
+				style="display: inline-block">
+				<table border="1" style="display: inline-block; vertical-align: middle;">
+					<tr>
+						<td nowrap>集計する月</td>
+						<td nowrap width="200"><input type="text" maxLength="4" size="5" th:field="*{year}"> 年 <input
+								type="text" maxLength="2" size="3" th:field="*{month}"> 月</td>
+				</table>
+				<button type="submit" style="width: 100px">集 計</button>
+			</form>
+			<form th:object="${aggregateByCustomerForm}" th:action="@{/aggregate/month}" method="get"
+				style="display: inline">
+				<button type="submit" style="width: 100px">クリア</button>
+			</form>
+		</div>
+	</div>
+	<br>
+	<table border="1" style="margin: 0 auto">
+		<tr>
+			<th nowrap width="100">得意先コード</th>
+			<th nowrap width="200">得意先名</th>
+			<th nowrap width="200">得意先別合計金額</th>
+		</tr>
+		<tr th:object="${order}" th:each="order : ${orderList}">
+			<td nowrap th:text="*{custCode}"></td>
+			<td nowrap th:text="*{custName}"></td>
+			<td nowrap align="right" th:text="*{totalPrice}"></td>
+		</tr>
+		<tr>
+			<th colspan="2">総計</th>
+			<td align="right" width="100" th:text="${sumTotal}"></td>
+		</tr>
+	</table>
+	<div class="error-message-area">
+		<div th:if="${aggregateByCustomerForm}" th:errors="${aggregateByCustomerForm.*}">validation massage</div>
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+</body>
+
+</html>

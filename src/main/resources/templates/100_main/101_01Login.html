@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ログイン画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h1>MVC操作体験</h1>
+		<h2>ログイン画面</h2>
+	</div>
+	<div class="notify-message-area">
+		<h3 th:text="${notifyMessage}"></h3>
+	</div>
+	<form th:object="${loginForm}" method="POST" th:action="@{/login}">
+		<table class="flat-table flat-table-1">
+			<tr>
+				<td>アカウント</td>
+				<td><input type="text" th:field="*{employeeNo}" th:value="H20001" maxlength="6"
+						class="nonborder-textbox"></td>
+			</tr>
+			<tr>
+				<td>パスワード</td>
+				<td><input type="password" th:field="*{password}" th:value="zy0001" maxLength="6" size="10"
+						class="nonborder-textbox"></td>
+			</tr>
+		</table>
+		<div class="button-area">
+			<button type="submit">ログイン</button>
+		</div>
+	</form>
+	<div class="error-message-area">
+		<div th:errors="${loginForm.*}">validation massage</div>
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+</body>
+
+</html>

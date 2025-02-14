@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先削除画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>得意先削除</h2>
+	</div>
+	<form th:action="@{/customer/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<th:block th:if="${customer} == null">
+		<form th:object="${deleteForm}" th:action="@{/customer/delete/find}" method="post">
+			<table border="1" style="margin: 0 auto">
+				<tr>
+					<td nowrap>得意先コード</td>
+					<td nowrap><input type="text" th:field="*{custCode}" maxLength="6" size="10"></td>
+					<td nowrap>
+						<button type="submit" style="width: 100px">検索</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</th:block>
+	<br>
+	<th:block th:if="${customer}">
+		<table th:object="${customer}" border="1" style="margin: 0 auto">
+			<tr>
+				<td nowrap width="100">得意先コード</td>
+				<td nowrap width="300" th:text="*{custCode}"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">得意先名</td>
+				<td nowrap width="300" th:text="*{custName}"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">電話番号</td>
+				<td nowrap width="300" th:text="*{telNo}"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">郵便番号</td>
+				<td nowrap width="300" th:text="*{postalCode}"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">住所</td>
+				<td nowrap width="300" th:text="*{address}"></td>
+			</tr>
+			<tr>
+				<td nowrap width="100">割引率</td>
+				<td nowrap width="300" th:text="*{discountRate}"></td>
+			</tr>
+		</table>
+		<br>
+		<div style="text-align: center">
+			<form th:action="@{/customer/delete/delete}" method="post" style="display: inline">
+				<button type="submit" style="width: 100px">削 除</button>
+			</form>
+			<form th:action="@{/customer/delete}" method="get" style="display: inline">
+				<button type="submit" style="width: 100px">ク リ ア</button>
+			</form>
+		</div>
+	</th:block>
+	<div class="error-message-area">
+		<div th:errors="${deleteForm.*}">validation massage</div>
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+</body>
+
+</html>

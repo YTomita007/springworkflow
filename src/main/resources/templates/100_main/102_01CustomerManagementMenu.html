@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>得意先管理メニュー画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>得意先管理メニュー</h2>
+	</div>
+
+	<form th:action="@{/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メインメニューへ戻る</button>
+		</div>
+	</form>
+
+	<table style="margin: 0 auto">
+		<tr>
+			<td>
+				<form th:action="@{/customer/find}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 検 索</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/customer/register}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 登 録</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/customer/delete}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 削 除</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/customer/change}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 変 更</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/customer/list}" method="get">
+					<button type="submit" style="width: 200px">得 意 先 一 覧</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+name: CI for Spring Boot with Maven
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Ubuntuが最適
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: JDK 17 をセットアップ
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'  # Mavenの依存関係をキャッシュして高速化
+
+      - name: Maven ビルドとテスト
+        run: mvn clean package

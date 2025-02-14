@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>注文メニュー画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>注文メニュー</h2>
+	</div>
+	<form th:action="@{/menu}" method="get">
+		<div align="right">
+			<button type="submit" style="width: 200px">メインメニューへ戻る</button>
+		</div>
+	</form>
+	<div class="notify-message-area">
+		<h3 th:text="${notifyMessage}"></h3>
+	</div>
+	<form th:object="${orderDetailForm}" th:action="@{/order/shoppingCart}" method="post">
+		<table border="1" style="margin: 0 auto">
+			<tr>
+				<td nowrap width="100">商品選択</td>
+				<td nowrap width="300">
+					<select id="itemCode" name="itemCode">
+						<option th:each="item : ${items}" th:value="${item.itemCode}"
+							th:selected="${item.itemCode == itemCode}" th:inline="text">[[${item.ItemName}]]</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td nowrap width="100">注文数</td>
+				<td nowrap width="300">
+					<input type="text" th:field="*{amount}" maxLength="10" size="20">
+				</td>
+			</tr>
+		</table>
+		<br>
+		<div style="text-align: center">
+			<button type="submit" style="width: 200px">ショッピングカートへ</button>
+		</div>
+	</form>
+	<form th:action="@{/order/purchase}" method="get">
+		<div style="text-align: center">
+			<button type="submit" style="width: 200px">購入画面へ</button>
+		</div>
+	</form>
+	<div class="error-message-area">
+		<div th:errors="${orderDetailForm.*}">validation massage</div>
+		<p th:text="${message}" class="error">error message</p>
+		<div th:object="${message}" th:each="message : ${errorMessageList}">
+			<div th:text="*{message}">message</div>
+		</div>
+	</div>
+</body>
+
+</html>

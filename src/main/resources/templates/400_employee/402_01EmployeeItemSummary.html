@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>商品管理画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>商品管理</h2>
+	</div>
+	<form th:action="@{/employee/menu}" method="get">
+		<div style="text-align: right">
+			<button type="submit" style="width: 200px">メニュー画面へ戻る</button>
+		</div>
+	</form>
+	<div class="notify-message-area">
+		<h3 th:text="${message}"></h3>
+	</div>
+	<form th:action="@{/employee/summary/sort}" method="post">
+		<div style="text-align: right">
+			<select id="column" name="column">
+				<option th:each="column : ${columns}" th:value="${column}" th:inline="text">[[${column}]]</option>
+			</select>
+			<select id="sortType" name="sortType">
+				<option th:each="sort : ${sortType}" th:value="${sort}" th:inline="text">[[${sort}]]</option>
+			</select>
+			<button type="submit" style="width: 200px">ソートする</button>
+		</div>
+	</form>
+	<form th:object="${itemSummary}" th:action="@{/employee/summary/download}" method="post">
+		<button type="submit" style="width: 180px">ダウンロード</button>
+		<table border="1" style="margin: 0 auto">
+			<tr>
+				<th width="100">商品番号</th>
+				<th width="300">商品名</th>
+				<th width="300">金額</th>
+				<th width="300">在庫数</th>
+			</tr>
+			<tr th:object="${item}" th:each="item : ${items}">
+				<td th:text="*{itemCode}">itemCode</td>
+				<td th:text="*{itemName}">itemName</td>
+				<td th:text="*{price}">price</td>
+				<td th:text="*{stock}">stock</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>

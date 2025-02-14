@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>従業員操作メニュー画面</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+
+<body>
+	<div style="text-align: center">
+		<h2>従業員操作メニュー</h2>
+	</div>
+	<form th:action="@{/menu}" method="get">
+		<div align="right">
+			<button type="submit" style="width: 200px">メインメニューへ戻る</button>
+		</div>
+	</form>
+	<table style="margin: 0 auto">
+		<tr>
+			<td>
+				<form th:action="@{/employee/attendance}" method="get">
+					<button type="submit" style="width: 200px">勤 怠 管 理</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/employee/summary}" method="get">
+					<button type="submit" style="width: 200px">商 品 明 細 取 得</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/employee/application}" method="get">
+					<button type="submit" style="width: 200px">申 請</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
